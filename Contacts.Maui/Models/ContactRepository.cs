@@ -56,5 +56,13 @@ namespace Contacts.Maui.Models
 			_contacts.Add(contact);
 		}
 
+		public static void DeleteContact(int contactId)
+		{
+			var contact = _contacts.FirstOrDefault(x => x.ContactId == contactId);
+			if (contact != null)
+			{
+				_contacts.Remove(contact);
+			}
+		}
 	}
 }
