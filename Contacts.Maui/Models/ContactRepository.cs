@@ -64,5 +64,16 @@ namespace Contacts.Maui.Models
 				_contacts.Remove(contact);
 			}
 		}
+
+		public static List<Contact> SearchContacts(string searchTerm)
+		{
+			return _contacts
+				.Where(x =>
+					!string.IsNullOrWhiteSpace(x.Name) && x.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+					!string.IsNullOrWhiteSpace(x.Email) && x.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+					!string.IsNullOrWhiteSpace(x.Phone) && x.Phone.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+					!string.IsNullOrWhiteSpace(x.Address) && x.Address.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+				.ToList();
+		}
 	}
 }

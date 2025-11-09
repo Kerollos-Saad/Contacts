@@ -21,6 +21,8 @@ public partial class ContactsPage : ContentPage
 	{
 		base.OnAppearing();
 
+		SearchBar.Text = string.Empty;
+
 		LoadContacts();
 	}
 
@@ -38,7 +40,7 @@ public partial class ContactsPage : ContentPage
 		//logic
 		if (listContacts.SelectedItem != null)
 		{
-			DisplayAlert("test", "test", "OK");
+			//DisplayAlert("test", "test", "OK");
 			//await Shell.Current.GoToAsync(nameof(EditContactPage));
 			await Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={
 				((Contact)listContacts.SelectedItem).ContactId
@@ -63,5 +65,11 @@ public partial class ContactsPage : ContentPage
 
 		ContactRepository.DeleteContact(contact.ContactId);
 		LoadContacts();
+	}
+
+	private void SearchBar_TextChanged(object? sender, TextChangedEventArgs e)
+	{
+		var contacts = new ObservableCollection<Contact>(ContactRepository.SearchContacts(((SearchBar)sender).Text));
+		listContacts.ItemsSource = contacts;
 	}
 }
